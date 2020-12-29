@@ -28,7 +28,12 @@ app.use("/", indexRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/newBookings", newBookingsRouter);
-
+// Serve static files from the React frontend app
+app.use(express.static(path.join(__dirname, "tripgo/build")));
+// Anything that doesn't match the above, send back index.html
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/tripgo/build/index.html"));
+});
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
